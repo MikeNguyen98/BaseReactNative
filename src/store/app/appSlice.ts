@@ -1,6 +1,7 @@
 import {tokenClear, tokenStorage} from 'src/utils/local.storage';
 import {createAppSlice} from '../createAppSlice';
 import {signIn} from './appAPI';
+import {PayloadAction} from '@reduxjs/toolkit';
 
 export interface AppSliceState {
   userToken: string | null;
@@ -68,6 +69,9 @@ export const appSlice = createAppSlice({
       state.userToken = null;
       tokenClear();
     }),
+    setToken: create.reducer((state, action: PayloadAction<string>) => {
+      state.userToken = action.payload;
+    }),
   }),
   // You can define your selectors here. These selectors receive the slice
   // state as their first argument.
@@ -78,7 +82,7 @@ export const appSlice = createAppSlice({
 });
 
 // Action creators are generated for each case reducer function.
-export const {signin, signout, restoreToken} = appSlice.actions;
+export const {signin, signout, restoreToken, setToken} = appSlice.actions;
 
 // Selectors returned by `slice.selectors` take the root state as their first argument.
 export const {selectUserToken, selectStatus} = appSlice.selectors;

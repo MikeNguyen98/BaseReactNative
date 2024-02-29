@@ -6,6 +6,8 @@ import * as routePath from './paths';
 import {useAppSelector} from 'src/store/hooks';
 import {selectStatus, selectUserToken} from 'src/store/app/appSlice';
 import LoadingScreen from 'src/components/common/loading/loadingScreen';
+import PublicRoutes from './PublicRoutes';
+import PrivateRoutes from './PrivateRoutes';
 
 const Stack = createNativeStackNavigator();
 const RouteContainer = () => {
@@ -17,21 +19,19 @@ const RouteContainer = () => {
   }
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={routePath.APP_HOME}>
+      <Stack.Navigator initialRouteName="Private">
         {userToken === null ? (
-          <Stack.Group>
-            <Stack.Screen
-              name={routePath.APP_LOGIN}
-              component={routePage.Login}
-            />
-          </Stack.Group>
+          <Stack.Screen
+            name="Public"
+            component={PublicRoutes}
+            options={{headerShown: false}}
+          />
         ) : (
-          <Stack.Group>
-            <Stack.Screen
-              name={routePath.APP_HOME}
-              component={routePage.Home}
-            />
-          </Stack.Group>
+          <Stack.Screen
+            name="Private"
+            component={PrivateRoutes}
+            options={{headerShown: false}}
+          />
         )}
       </Stack.Navigator>
     </NavigationContainer>
